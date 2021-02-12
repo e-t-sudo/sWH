@@ -95,7 +95,7 @@
                         $cat_id = $row['cat_id'];
                         $display = $row['display'];
                         $display = ($display==0)?"NO":"YES";
-                        print('<tr class="category"><td><a href="index.php?edit=category&id='.$cat_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$category.'</td><td>'.$display.'</td><td><a href="index.php?delete=category&id='.$cat_id.'"><i class="fa fa-remove"></i></a></td></tr>');
+                        print('<tr class="category"><td><a class="modal-btn" data-id='.$cat_id.' href="index.php?edit=category&id='.$cat_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$category.'</td><td>'.$display.'</td><td><a href="index.php?delete=category&id='.$cat_id.'"><i class="fa fa-remove"></i></a></td></tr>');
                         $sub_query = "select * from categories where `parent` = $cat_id";
                         $sub_result = mysqli_query($conn, $sub_query);
                         if(mysqli_num_rows($sub_result)>0){
@@ -119,6 +119,19 @@
 		</table>
 		</div>
 		<div class="col-md-6 bg-light">
+        <div class="modal edit-category" id="edit-category" tabindex="-1" role="dialog" aria-labelledby="edit-category" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="text-center"><h5 class="modal-title" id="exampleModalLabel">Edit Category</h5></div>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="ajax_response">
+                        
+                        </div>
+                    </div>
+                </div>
+        </div>
 		<h5>Offices & Customer Service Timings</h5>
 		<table class="table table-bordered">
 			<thead>
@@ -173,5 +186,21 @@
 		</div>
 	</div>
 	</div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".modal-btn").click(function(){
+            var cat_id = $(this).data('id');
+            $.ajax({
+                url: "ajaxfile.php",
+                type: 'post',
+                data: {cat_id: cat_id},
+                success: function(response){
+                    $('.ajax_response').html(response);
+                    $('.#edit-category').modal("show");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
