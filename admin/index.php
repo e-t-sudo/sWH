@@ -13,6 +13,54 @@
 </style>
 </head>
 <body>
+<!-- MODALS ... -->
+        <div class="modal edit-category" id="edit-category" tabindex="-1" role="dialog" aria-labelledby="edit-category" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="text-center">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="ajax_response">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal edit-category" id="edit-address" tabindex="-1" role="dialog" aria-labelledby="edit-address" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="text-center">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Address</h5>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="ajax_response">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal edit-category" id="edit-timing" tabindex="-1" role="dialog" aria-labelledby="edit-timing" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="text-center">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Timing</h5>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="ajax_response">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- ... MODALS -->
+
 	<?php// $page ='home'; include 'includes/header.php';
     //header is under maintenence for now!
     ?> 
@@ -74,14 +122,14 @@
 	</div>
 	<div class="container-fluid">
 	<div class="row text-center">
-		<div class="col-md-6 bg-light">
+		<div class="col-md-4 bg-light">
 		<h5>Categories & Sub-Categories</h5>
        <?php if(isset($_GET['delete'])){ ?>
         <p class="text-center text-danger">Deleted!</p>
         <?php } ?>
 		<table class="table table-bordered">
 			<thead>
-				<th></th><th>Category Name</th><th>Display on the main website?(Y/N)</th><th></th>
+				<th></th><th>Category Name</th><th>Display</th><th></th>
 			</thead>
 			<tbody>
             <?php
@@ -95,7 +143,7 @@
                         $cat_id = $row['cat_id'];
                         $display = $row['display'];
                         $display = ($display==0)?"NO":"YES";
-                        print('<tr class="category"><td><a class="modal-btn" data-id='.$cat_id.' href="index.php?edit=category&id='.$cat_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$category.'</td><td>'.$display.'</td><td><a href="index.php?delete=category&id='.$cat_id.'"><i class="fa fa-remove"></i></a></td></tr>');
+                        print('<tr class="category"><td><a type="button" class="modal-btn modal-btn-1" data-id='.$cat_id.'><i class="fa fa-pencil"></i></a></td><td>'.$category.'</td><td>'.$display.'</td><td><a href="index.php?delete=category&id='.$cat_id.'"><i class="fa fa-remove"></i></a></td></tr>');
                         $sub_query = "select * from categories where `parent` = $cat_id";
                         $sub_result = mysqli_query($conn, $sub_query);
                         if(mysqli_num_rows($sub_result)>0){
@@ -104,7 +152,7 @@
                                 $sub_category = $sub_row['category'];
                                 $sub_display = $sub_row['display'];
                                 $sub_display = ($sub_display)?"YES":"NO";
-                                print('<tr class = "sub-category"><td><a href="index.php?edit=sub-category&id='.$sub_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$sub_category.'</td><td>'.$sub_display.'</td><td><a href="index.php?delete=sub-category&id='.$sub_id.'"><i class="fa fa-remove"></i></a></td></tr>');
+                                print('<tr class = "sub-category"><td><a type="button" class="modal-btn modal-btn-1" data-id='.$sub_id.'><i class="fa fa-pencil"></i></a></td><td>'.$sub_category.'</td><td>'.$sub_display.'</td><td><a href="index.php?delete=sub-category&id='.$sub_id.'"><i class="fa fa-remove"></i></a></td></tr>');
                             }
                         }else{
                             echo "NO RESULTS FOR SUB-CATEGORIES";
@@ -118,24 +166,11 @@
 			</tbody>
 		</table>
 		</div>
-		<div class="col-md-6 bg-light">
-        <div class="modal edit-category" id="edit-category" tabindex="-1" role="dialog" aria-labelledby="edit-category" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <div class="text-center"><h5 class="modal-title" id="exampleModalLabel">Edit Category</h5></div>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="ajax_response">
-                        
-                        </div>
-                    </div>
-                </div>
-        </div>
-		<h5>Offices & Customer Service Timings</h5>
+		<div class="col-md-8 bg-light">
+		<h5>Offices & Support</h5>
 		<table class="table table-bordered">
 			<thead>
-				<th></th><th>Office Name</th><th>City</th><th>State</th><th>Pincode</th><th>Display</th>
+				<th></th><th>Office Name</th><th>City</th><th>State</th><th>Pincode</th><th>Display</th><th></th>
 			</thead>
 			<tbody>
 					<?php
@@ -152,7 +187,7 @@
                             $pincode = $office_row['pin_code'];
                             $display = $office_row['display'];
                             $display = ($display)?"YES":"NO";
-                            print('<tr><td><a href="index.php?edit=address&id='.$address_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$office_name.'</td><td>'.$city_name.'</td><td>'.$state_name.'</td><td>'.$pincode.'</td><td>'.$display.'</td><td><a href="index.php?delete=address&id='.$address_id.'"><i class="fa fa-remove"></i></a></td></tr>');
+                            print('<tr><td><a type="button" class="modal-btn modal-btn-2" data-id='.$address_id.'><i class="fa fa-pencil"></i></a></td><td>'.$office_name.'</td><td>'.$city_name.'</td><td>'.$state_name.'</td><td>'.$pincode.'</td><td>'.$display.'</td><td><a href="index.php?delete=address&id='.$address_id.'"><i class="fa fa-remove"></i></a></td></tr>');
                         }
                     }else{
                         echo "NO RESULTS FOR OFFICES";
@@ -160,8 +195,9 @@
 					?>
 			</tbody>
 		</table>
+        <h5>Customer Service Timings</h5>
         <table class="table table-bordered">
-                    <thead><th></th><th>Day</th><th>Working Hours</th><th>Display</th></thead>
+                    <thead><th></th><th>Day</th><th>Working Hours</th><th>Display</th><th></th></thead>
                     <tbody>
                     <?php
                         $conn = mysqli_connect("localhost", "root", "", "newbase");
@@ -174,7 +210,7 @@
                                 $working_hours = $timing_row['time_range'];
                                 $display = $timing_row['display'];
                                 $display = ($display)?"YES":"NO";
-                                print('<tr><td><a href="index.php?edit=timing&id='.$timing_id.'"><i class="fa fa-pencil"></i></a></td><td>'.$day.'</td><td>'.$working_hours.'</td><td>'.$display.'</td><td><a href="index.php?delete=timing&id='.$timing_id.'"><i class="fa fa-remove"></i></a></td></tr>');
+                                print('<tr><td><a type="button" class="modal-btn modal-btn-3" data-id='.$timing_id.'><i class="fa fa-pencil"></i></a></td><td>'.$day.'</td><td>'.$working_hours.'</td><td>'.$display.'</td><td><a href="index.php?delete=timing&id='.$timing_id.'"><i class="fa fa-remove"></i></a></td></tr>');
                             }
                         }else{
                             echo "NO RESULTS FOR TIMINGS";
@@ -186,21 +222,46 @@
 		</div>
 	</div>
 	</div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".modal-btn").click(function(){
-            var cat_id = $(this).data('id');
-            $.ajax({
-                url: "ajaxfile.php",
-                type: 'post',
-                data: {cat_id: cat_id},
-                success: function(response){
-                    $('.ajax_response').html(response);
-                    $('.#edit-category').modal("show");
-                }
+    <script type='text/javascript'>
+           $(document).ready(function(){
+                $('.modal-btn-1').click(function(){
+                    var cat_id = $(this).data('id');
+                    $.ajax({
+                        url: 'ajaxfile.php',
+                        type: 'post',
+                        data: {cat_id: cat_id},
+                        success: function(response){ 
+                            $('.ajax_response').html(response); 
+                            $('#edit-category').modal('show'); 
+                        }
+                    });
+                });
+                $('.modal-btn-2').click(function(){
+                    var add_id = $(this).data('id');
+                    $.ajax({
+                        url: 'ajaxfile.php',
+                        type: 'post',
+                        data: {add_id: add_id},
+                        success: function(response){ 
+                            $('.ajax_response').html(response); 
+                            $('#edit-address').modal('show'); 
+                        }
+                    });
+                });
+                $('.modal-btn-3').click(function(){
+                    var timing_id = $(this).data('id');
+                    $.ajax({
+                        url: 'ajaxfile.php',
+                        type: 'post',
+                        data: {timing_id: timing_id},
+                        success: function(response){ 
+                            $('.ajax_response').html(response); 
+                            $('#edit-timing').modal('show'); 
+                        }
+                    });
+                });
             });
-        });
-    });
+           
 </script>
 </body>
 </html>
