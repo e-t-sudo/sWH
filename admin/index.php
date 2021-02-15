@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $_SESSION['admin_id'] = 3;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +17,28 @@
 </style>
 </head>
 <body>
+<?php if(!isset($_SESSION['admin_id'])){ ?>
+    <div class="container-fluid">
+	<div class="col-12 text-center">
+	<h1 class="bg-light">Admin Login</h1>
+	</div>
+	<form action="index.php" method="post">
+		<div class="row">
+			<div class="col-12">
+			<input type="email" name="email" class="form-control" placeholder="Admin Email">
+			<br>
+			</div>
+			<div class="col-12">
+			<input type="password" name="pwd" class="form-control" placeholder="Password">
+			<br>
+			</div>
+			<div class="col-12 text-center">
+			<input type="submit" name="login" class="btn btn-primary" value="Login">
+			</div>
+		</div>
+	</form>
+	</div>
+<?php exit; } ?>
 <!-- MODALS ... -->
         <div class="modal edit-category" id="edit-category" tabindex="-1" role="dialog" aria-labelledby="edit-category" aria-hidden="true">
             <div class="modal-dialog modal-md">
@@ -102,18 +128,16 @@
 	<div class="padding">
 	<br><br><br><br><br><br>
 	<h2 class="text-center">Admin Panel Home Page</h2>
-	<div class="bg-light"><p class="text-center text-success">
+    <div class="bg-light">
+    <p class="text-center text-success">
 	<?php
-	if(false){
-    $user_id = $_SESSION['user_id'];
-	$conn = mysqli_connect('localhost', 'root', '', 'testbase');
-	$user_info_query = "select * from users where id = ".$user_id;
-	$info_result = mysqli_query($conn, $user_info_query);
+    $admin_id = $_SESSION['admin_id'];
+	$conn = mysqli_connect('localhost', 'root', '', 'newbase');
+	$admin_info_query = "select * from admins where admin_id = ".$admin_id;
+	$info_result = mysqli_query($conn, $admin_info_query);
 	$info_arr = mysqli_fetch_assoc($info_result);
-	$user_full_name = $info_arr['full_name'];
-	echo $user_full_name;
-    }
-    echo "Ershad Tantry";
+	$admin_full_name = $info_arr['full_name'];
+	echo $admin_full_name;
 	?>
 	</p>
 	</div>
