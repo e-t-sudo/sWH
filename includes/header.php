@@ -18,7 +18,7 @@
                         </li>
                         <?php 
                             include "includes/init.php";
-                            $sql_query = "select * from categories where `parent` = 0";
+                            $sql_query = "select * from categories where `parent` = 0 and `display` = 1";
                             $query_result = mysqli_query($conn, $sql_query);
                             if(mysqli_num_rows($query_result)>0){
                                 while($row = mysqli_fetch_assoc($query_result)){
@@ -27,7 +27,7 @@
                                     print('<li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="notAvailable.php" data-toggle="dropdown">'.$category.'<span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">');
-                                        $sql_query = "select * from categories where `parent` = $cat_id";
+                                        $sql_query = "select * from categories where `parent` = $cat_id and `display` = 1";
                                         $sub_query_result = mysqli_query($conn, $sql_query);
                                         if(mysqli_num_rows($sub_query_result)>0){
                                             while($row = mysqli_fetch_assoc($sub_query_result)){

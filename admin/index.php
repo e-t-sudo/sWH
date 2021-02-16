@@ -81,37 +81,24 @@
     ?> 
     <?php include "logincheck.php"; ?>
     <?php
-            if(isset($_GET['edit'])){
-                $edit = $_GET['edit'];
-                $edit_id = $_GET['id'];
+            if(isset($_POST['edit_category']) && !isset($_POST['new_parent'])){
                 $conn = mysqli_connect("localhost", "root", "", "newbase");
-                if($edit==="category"){
-                    //editing requests are to be handled with ajax
-                }else if($edit==="sub-category"){
-                    //editing requests are to be handled with ajax
-                }else if($edit==="address"){
-                    //editing requests are to be handled with ajax
-                }else if($edit==="timing"){
-                    //editing requests are to be handled with ajax
-                }
-            }else if(isset($_GET['delete'])){
-                $delete = $_GET['delete'];
-                $delete_id = $_GET['id'];
+                    $new_category = $_POST['new_category'];
+                    $cat_id = $_POST['cat_id'];
+                    $display = $_POST['new_display'];
+                    $edit_query = "update categories set `category` = '$new_category', `display` = $display where `cat_id` = $cat_id";
+                    mysqli_query($conn, $edit_query);
+            }else if(isset($_POST['edit_category']) && isset($_POST['new_parent'])){
+                echo  $_POST['new_parent'];
                 $conn = mysqli_connect("localhost", "root", "", "newbase");
-                if($delete==="category"){
-                    $delete_query = "delete from categories where `cat_id` = $delete_id";
-                    $delete_result = mysqli_query($conn, $delete_query);
-                    $_GET['delete']="done";
-                }else if($delete==="sub-category"){
-                    $delete_query = "delete from categories where `cat_id` = $delete_id";
-                    $delete_result = mysqli_query($conn, $delete_query);
-                    $_GET['delete']="done";
-                }else if($delete==="address"){
-
-                }else if($delete==="timing"){
-
-                }
-            } 
+                $new_category = $_POST['new_category'];
+                $cat_id = $_POST['cat_id'];
+                $display = $_POST['new_display'];
+                $new_parent = $_POST['new_parent'];
+                $edit_query = "update categories set `category` = '$new_category', `display` = $display, `parent` = $new_parent where `cat_id` = $cat_id";
+                    mysqli_query($conn, $edit_query);
+            }
+            
     ?>
 	<div class="container-fluid padding">
 	<div class="padding">
