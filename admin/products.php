@@ -6,13 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php include "includes/head.php"; ?>
     <title>Products</title>
+    <style>
+        .fa-star{
+            color: #FF9529;
+        }
+    </style>
 </head>
 <body>
    <?php include "includes/header.php"; ?>
    <br><br><br><br><br><br>
-	<h2 class="text-center">Products</h2>
+	<h2 class="text-center">Admin Panel Authors Page</h2>
 	<br><br><br><br><br><br>
-    <table class="table table-bordered table-striped text-center">
+    <table class="table table-bordered text-center">
 	<thead>
 		<th></th><th>Product Name</th><th>List Price</th><th>Discount</th><th>Price</th><th>Rating</th>
 	</thead>
@@ -31,7 +36,7 @@
                 $prod_category = $row['prod_category'];
                 $description = $row['description'];
                 $rating = $row['rating']; ?>
-            <tr><td></td><td><?= $prod_title?></td><td><?= $list_price?></td><td><?=$discount ?></td><td><?=$price ?></td><td><?= $rating ?><i class="fa fa-star"></i></td></tr>
+            <tr><td></td><td><?= $prod_title?></td><td><?= $list_price?></td><td><?= $discount ?></td><td><?=$price ?></td><td><?= $rating ?><?php for($i=0; $i<$rating; $i++) echo '<i class="fa fa-star"></i>'?></td></tr>
             <?php }
             } ?>
 	</tbody>
