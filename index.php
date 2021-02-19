@@ -47,6 +47,17 @@
         .filter-btn{
             margin: 20px;
         }
+        @media only screen and (max-width: 768px) {
+    #product-menu {
+        display: none;
+         }
+        }
+        
+        @media only screen and (min-width: 768px){
+            #smaller-product-menu{
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -82,12 +93,7 @@
                 <input type = "submit" class="btn btn-secondary btn-sm filter-btn" name="filter" value="Filter"></input>
             </form>
         </div>
-        <?php 
-            if(isset($_POST['tags'])){
-                $tags = $_POST['tags'];
-              // for($i=0; $i<sizeof($tags); $i++) echo $tags[$i];
-            }
-        ?>
+        
 <br><br><hr><h1 style="text-align: center;">Featured Products</h1><hr>
         <div class="container-fluid text-center">
             <div class="row">
