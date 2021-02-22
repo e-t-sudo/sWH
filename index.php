@@ -3,65 +3,10 @@
 <head>
     <?php include "includes/head.php"; ?>
     <title>sWH</title>
-    <style>
-        .card-img-top{
-            height: 100px;
-            width: 100px;
-        /*    border-top-left-radius: 30px;
-            border-bottom-right-radius: 30px;*/
-            border-radius: 5%;
-            padding: 0px;
-            margin: 0px;
-             box-shadow: 1px 1px 3px 1px grey;
-        }
-        .prod-title{
-            padding: 5px;
-            text-shadow: 1px 1px 3px 1px grey;
-            font-size: 20px;
-            color: #666666;
-        }
-        table{
-            height: 130px; 
-            width: 80%;
-            padding-left: 0px;
-        }
-        .details-btn{
-            width: 100%;
-        }
-        .prod-det{
-            padding-left: 20px;
-        }
-        .fa-star{
-            color: #FF9529;
-        }
-        .tile{
-            color: black;
-        }
-        .tile:hover{
-            text-decoration: none;
-            color: black;          
-        }
-        .tag-boxes{
-            padding: 10px;
-        }
-        .filter-btn{
-            margin: 20px;
-        }
-        @media only screen and (max-width: 768px) {
-    #product-menu {
-        display: none;
-         }
-        }
-        
-        @media only screen and (min-width: 768px){
-            #smaller-product-menu{
-                display: none;
-            }
-        }
-    </style>
+    
 </head>
 <body>
-        <?php include "includes/header.php"; ?>
+        <?php $page = "home"; include "includes/header.php"; ?>
 
         <br><br><br>
         <?php
