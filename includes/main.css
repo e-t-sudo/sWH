@@ -42,6 +42,7 @@
     margin-top: 5px;
     margin-left: 20px;
 }
+
 .dropdown-menu{
     background-color: var(--color1)!important;
 }
@@ -58,4 +59,12 @@
 }
 .nav-item{
     padding-right: 2em;
+}
+.no-style-links{
+    text-decoration: none;
+    color: #333333;
+}
+.no-style-links:hover{
+    text-decoration: none;
+    color: #111111;
 }
