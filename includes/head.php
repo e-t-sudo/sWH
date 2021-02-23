@@ -4,13 +4,11 @@
     <meta name="description" content="The e-commerse site for those who want everything delivered to them">
     <meta name="keywords" content="e-commerse, fiction, books, tv, shows, movies, documentaries, games, game, rpg, rpgs">
    
-   
-    <script src="frameworks/jquery.min.js"></script>
-    <script src="frameworks/popper.min.js"></script>
     <link rel="stylesheet" href="frameworks/bootstrap.css">
+    <script src="./frameworks/jquery.min.js"></script>
+    <script src="frameworks/popper.min.js"></script>
     <script src="frameworks/bootstrap.js"></script>
-    <script src="https://use.fontawesome.com/d8fd830dde.js"></script>
-
+    <script src="https://use.fontawesome.com/d8fd830dde.js"></script>  
     <link rel="stylesheet" href="includes/main.css">
     <style>
         .card-img-top{
@@ -88,4 +86,47 @@
             }
                 
         }
-    </style>
+        .carousel-indicators .active {
+   background-color: #ffffff!important;
+        }
+.indicator{
+  background-color: gray!important;
+}
+
+@media only screen and (min-width: 768px){
+    .carousel-item img{
+        height: 30vw;
+    }
+    .carousel-caption{
+    background-image: linear-gradient(-90deg, #ffffff, #000000, #ffffff);
+    opacity: 0.6;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+}
+@media only screen and (max-width: 768px){
+    .carousel-item img{
+        height: 235.8px; /* 30 percent of 786px, for a smooth transition*/
+        width: auto;
+    }
+    .carousel-caption{
+    background-image: linear-gradient(-90deg, #ffffff, #000000, #ffffff);
+    opacity: 0.6;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+
+}
+}
+.carousel{
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 5vh;
+}
+.carousel-arrow{
+    color: black;
+    font-size: 1.2rem;
+}
+
+</style>

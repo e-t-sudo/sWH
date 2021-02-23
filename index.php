@@ -8,6 +8,49 @@
 <body>
         <?php $page = "home"; include "includes/header.php"; ?>
 
+
+        <div id="carouselSlider" class="carousel slide" data-ride="carousel" data-interval="500">
+        <ol class="carousel-indicators">
+          <li class="indicator" data-target="#carouselSlider" data-slide-to="0" class="active"></li>
+          <li class="indicator" data-target="#carouselSlider" data-slide-to="1"></li>
+          <li class="indicator" data-target="#carouselSlider" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100" src="./img/carousel/1.png" alt="First slide">
+            <a href="#">
+                <div class="carousel-caption text-center">
+                <h5>Expert Advisors</h5>
+                </div>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./img/carousel/2.png" alt="Second slide">
+            <a href="#">
+            <div class="carousel-caption text-center">
+                <h5>MetaTrader Indicators</h5>
+            </div>
+            </a>
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100" src="./img/carousel/3.png" alt="Third slide">
+            <a href="#">
+            <div class="carousel-caption text-center">
+                <h5>Metatrader Scripts</h4>
+            </div>
+            </a>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselSlider" role="button" data-slide="prev">
+          <i class="carousel-arrow fa fa-chevron-left"></i>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselSlider" role="button" data-slide="next">
+          <i class="carousel-arrow fa fa-chevron-right"></i>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+
         <br><br><br>
         <?php
             function isPresent($ar, $val){
