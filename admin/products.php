@@ -16,7 +16,8 @@
    <?php include "includes/header.php"; ?>
    <br><br><br><br><br><br>
 	<h2 class="text-center">Admin Panel Authors Page</h2>
-	<br><br><br><br><br><br>
+	<br><br><br><br><br><br>       
+    <h4 class="text-center">Products</h4>
     <table class="table table-bordered text-center">
 	<thead>
 		<th></th><th>Product Name</th><th>List Price</th><th>Discount</th><th>Price</th><th>Rating</th>

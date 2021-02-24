@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
   <a class="navbar-brand" href="#">Admin Panel</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -8,11 +8,11 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Categories</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item dropdown">
         <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a style="cursor:pointer;" class="dropdown-toggle nav-link" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Product Tags
-          </button>
+          </a>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <table class="table text-center">
                 <?php
@@ -35,6 +35,34 @@
                 </table>
           </div>
         </div>
+      </li>
+      <?php 
+        if(isset($_SESSION['admin_id'])){
+          $admin_id = $_SESSION['admin_id'];
+          $conn = mysqli_connect("localhost", "root", "", "newbase");
+          $privilege_query = "select * from admins where `admin_id` = ".$admin_id;
+          $privilege = mysqli_fetch_assoc(mysqli_query($conn, $privilege_query))['access'];
+          if($privilege==3){ ?>
+              <li id="addusers-btn">
+                  <a class="nav-link" href="addusers.php">Add Users</a>
+              </li>
+   <?php  }
+
+        }
+      ?>
+      <style>
+      @media only screen and (min-width: 768px){
+            #logout-btn{
+              position:absolute; right: 10px;
+            }
+            #addusers-btn{
+              position:absolute;
+              right: 100px;
+            }
+      }
+      </style>
+      <li id="logout-btn">
+          <a class="nav-link" href="logout.php">Logout</a>
       </li>
     </ul>
   </div>

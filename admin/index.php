@@ -1,18 +1,4 @@
-<?php
-    session_start();
-    if(isset($_POST['login'])){
-        $email = $_POST['email'];
-        $pwd = $_POST['pwd'];
-        unset($_POST);
-        $conn = mysqli_connect("localhost", "root", "", "newbase");
-        $admin_query = "select * from admins where email = '$email' and pwd = '$pwd'";
-        $result = mysqli_query($conn, $admin_query);
-        if(mysqli_num_rows($result) > 0){
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['admin_id'] = $row['admin_id'];
-        }
-    }
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +14,8 @@
 </style>
 </head>
 <body>
+
+<?php include "logincheck.php"; ?>
 <!-- MODALS ... -->
         <div class="modal edit-category" id="edit-category" tabindex="-1" role="dialog" aria-labelledby="edit-category" aria-hidden="true">
             <div class="modal-dialog modal-md">
@@ -76,10 +64,7 @@
         </div>
 <!-- ... MODALS -->
 
-	<?php// $page ='home'; include 'includes/header.php';
-    //header is under maintenence for now!
-    ?> 
-    <?php include "logincheck.php"; ?>
+	<?php include 'includes/header.php';?> 
     <?php
             if(isset($_POST['edit_category']) && !isset($_POST['new_parent'])){
                 $conn = mysqli_connect("localhost", "root", "", "newbase");
