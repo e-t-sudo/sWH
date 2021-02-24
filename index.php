@@ -16,30 +16,38 @@
           <li class="indicator" data-target="#carouselSlider" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100" src="./img/carousel/1.png" alt="First slide">
-            <a href="#">
-                <div class="carousel-caption text-center">
-                <h5>Expert Advisors</h5>
-                </div>
-            </a>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="./img/carousel/2.png" alt="Second slide">
-            <a href="#">
-            <div class="carousel-caption text-center">
-                <h5>MetaTrader Indicators</h5>
-            </div>
-            </a>
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100" src="./img/carousel/3.png" alt="Third slide">
-            <a href="#">
-            <div class="carousel-caption text-center">
-                <h5>Metatrader Scripts</h4>
-            </div>
-            </a>
-          </div>
+                   <?php    $conn = mysqli_connect("localhost", "root", "", "newbase");
+                 $prod_query = "select * from products where `featured` = 1";
+                 $total_prods = sizeof(mysqli_fetch_assoc(mysqli_query($conn, $prod_query)));
+                 echo $total_prods;
+                 $prod_result = mysqli_query($conn, $prod_query);
+                 $numbers = range(1, $total_prods);
+                 shuffle($numbers);
+                 $rand_prod1 = $numbers[0]; $rand_prod2 = $numbers[1]; $rand_prod3 = $numbers[2];
+                 $prod_number = 1; $rand_prod_number = 0;
+                 $prod_result = mysqli_query($conn, $prod_query);
+                 $rand_prods = array(3);
+                 while($row = mysqli_fetch_assoc($prod_result)){
+                     if($prod_number===$rand_prod1){
+                         $rand_prods[0] = $row['prod_title'];
+                     }else if($prod_number===$rand_prod2){
+                         $rand_prods[1] = $row['prod_title'];
+                     }else if($prod_number===$rand_prod3){
+                         $rand_prods[2] = $row['prod_title'];
+                     }
+                     $prod_number++;
+                 }
+                 for($i=0; $i<sizeof($rand_prods); $i++){  ?>
+                    <div class="carousel-item <?php if($i===0) echo 'active'; ?>">
+                     <img class="d-block w-100" src="./img/carousel/<?= $i+1?>.png" alt="First slide">
+                     <a href="#">
+                         <div class="carousel-caption text-center">
+                         <h5><?= $rand_prods[$i]?></h5>
+                         </div>
+                     </a>
+                   </div>
+        <?php      }
+        ?>
         </div>
         <a class="carousel-control-prev" href="#carouselSlider" role="button" data-slide="prev">
           <i class="carousel-arrow fa fa-chevron-left"></i>
@@ -52,6 +60,8 @@
       </div>
 
         <br><br><br>
+       
+        
         <?php
             function isPresent($ar, $val){
                 for($i=0; $i<sizeof($ar); $i++){
@@ -136,7 +146,7 @@
     }
     </script>
 </body>
-</html>
+</html> 
 
 
 
