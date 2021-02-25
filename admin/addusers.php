@@ -21,6 +21,20 @@
 </head>
 <body>
     <?php include "./logincheck.php"; ?>
+    <?php 
+        if(isset($_POST['add-user'])){
+            $full_name = $_POST['name'];
+            $email = $_POST['email'];
+            $pwd = $_POST['pwd'];
+            $access = $_POST['access'];
+            $conn = mysqli_connect("localhost", "root", "", "newbase");
+            $add_query = "insert into admins (`full_name`, `email`, `pwd`, `access`) values ('$full_name', '$email', '$pwd', $access)";
+            $result = mysqli_query($conn, $add_query);
+            if($result===true) echo "Done";
+            else echo mysqli_error($conn);
+            
+        }
+    ?>
     <?php include "./includes/header.php"; ?>
     <br><br><br><br><br><br>
     <?php 
@@ -47,10 +61,12 @@
                       $admin_email = $row['email'];
                       $admin_pwd = $row['pwd'];
                       $admin_access = $row['access'];
-                      if($admin_access>=3){
+                      if($admin_access==3){
                           $admin_access = "Super User";
-                      }else{
+                      }else if($admin_access==2){
                           $admin_access = "Simple User";
+                      }else if($admin_access==1){
+                          $admin_access = "Read-Only Access";
                       }?>
                     <tr><td></td><td><?= $admin_name?></td><td><?= $admin_email?></td><td><?= $admin_access ?></td><td></td></tr>
 
@@ -74,18 +90,18 @@
     <?php if($current_user_privilege>=3){ ?>
     <div class="add-user-form">
         <h4 class="text-center">Add New Admin</h4>
-    <form class="form">
+    <form class="form" action="addusers.php" method="post">
         <div class="form-group">
-            <input type="text" class="form-control" id="name" placeholder="Full Name">
+            <input type="text" class="form-control" name="name" placeholder="Full Name">
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" id="email" placeholder="Email">
+            <input type="text" class="form-control" name="email" placeholder="Email">
         </div>
         <div class="form-group">
-            <input type="password" class="form-control" id="pwd" placeholder="Password">
+            <input type="password" class="form-control" name="pwd" placeholder="Password">
         </div>
         <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" name="access">
                     <option value="3">Super User</option>
                     <option value="2">Simple User</option>
                     <option value="1">ReadOnly Access</option>
@@ -100,5 +116,11 @@
     <br><br><br>
 <?php } ?>
     <footer class="footer text-center">All Rights Reserved</footer>
+    <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
+</body>
 </body>
 </html>
