@@ -55,8 +55,9 @@
 		$query_result = mysqli_query($conn, $sql_query);
 		if(mysqli_num_rows($query_result)>0){
 			while($row = mysqli_fetch_assoc($query_result)){
+				$cat_id = $row['cat_id'];
 				$category = $row['category'];
-				print('<p><a href="#">'.$category.'</a></p>');
+				print('<p><a style="text-decoration:none;" href="products.php?category='.$cat_id.'">'.$category.'</a></p>');
 			}
 		}
 	?>
