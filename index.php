@@ -27,13 +27,17 @@
                  $prod_number = 1; $rand_prod_number = 0;
                  $prod_result = mysqli_query($conn, $prod_query);
                  $rand_prods = array(3);
+                 $rand_prod_ids = array(3);
                  while($row = mysqli_fetch_assoc($prod_result)){
                      if($prod_number===$rand_prod1){
                          $rand_prods[0] = $row['prod_title'];
+                         $rand_prod_ids[0] = $row['prod_id'];
                      }else if($prod_number===$rand_prod2){
                          $rand_prods[1] = $row['prod_title'];
+                         $rand_prod_ids[1] = $row['prod_id'];
                      }else if($prod_number===$rand_prod3){
                          $rand_prods[2] = $row['prod_title'];
+                         $rand_prod_ids[2] = $row['prod_id'];
                      }
                      $prod_number++;
                  }
@@ -42,7 +46,7 @@
                      <img class="d-block w-100" src="./img/carousel/<?= $i+1?>.png" alt="First slide">
                      <a href="#">
                          <div class="carousel-caption text-center">
-                         <h5><?= $rand_prods[$i]?></h5>
+                         <a style="text-decoration:none; color: white; " href="details.php?product_id=<?=$rand_prod_ids[$i]?>"><h5><?= $rand_prods[$i]?></h5></a>
                          </div>
                      </a>
                    </div>
