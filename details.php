@@ -22,8 +22,7 @@
 </head>
 <body>
         <?php include "./includes/header.php"; ?>
-        <br><br><br><br><br><br><br><br>
-                <h3 class="text-center"><?= $prod_title?></h3>
+        <br><br>
         <div class="container-fluid prod_details">
             <div class="row">
                 <div class="prod_images col-md-6">
@@ -48,6 +47,12 @@
                             position: absolute;
                             right: 5px;
                         }
+                        .full_documentation{
+                            border: solid;
+                            background-color: #f0f0f0;
+                            width: 100%;
+                        }
+
                     </style>
                     <div class="row">
                         <div class="col-12">
@@ -67,24 +72,23 @@
                 <div class="prod_description col-md-6">
                         <h5><?= $prod_title ?></h5>
                         <p><?= $description ?></p>
-                        <p>Rating: <?= $rating?></p>
-                        <p>Price: $<?= $price?> </p>
+                        <p>Rating:<?php for($i=0; $i<$rating; $i++) echo '<i class="fa fa-star"></i>'; ?>(10 reviews)</p>
+                        <p>Lifetime-Access Price : $<?= $price?> </p>
                         <form action="addtocart.php" method="post">
                             <div class="form-group">
-                                    <div class="col-xs-3">
-                                        <input type="text" class="form-control" name="something">
-                                    </div>
-                            </div>
-                            <div class="form-group">
                                     <select name="format" class="form-control">
-                                        <option value=1>Monthly Subscription</option>
-                                        <option value=1>Annual Subscription</option>
                                         <option value=1>Lifetime Access</option>
+                                        <option value=2>Annual Subscription</option>
+                                        <option value=3>Monthly Subscription</option>
                                     </select>
                             </div>
                             <input type="hidden" name="prod_id" value=<?= $prod_id?>>
-                            <button type="submit" name="addtocart" class="btn btn-success addtocart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
+                            <button type="submit" name="addtocart" class="btn btn-warning addtocart"><i class="fa fa-shopping-cart"></i>Add to Cart</button>
                         </form>
+                 </div>
+                 <div class="full_documentation text-center">
+                        Full Documentation for usage of the product
+                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
                  </div>
             </div>
         </div>
