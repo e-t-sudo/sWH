@@ -110,7 +110,7 @@
                     $description = $row['description'];
                     $rating = $row['rating']; ?>
             <div class="col-md-4 col-sm-6 col-xs-6 col-lg-4 prod-tile">
-                <a href="#" class="tile">
+                <a href="details.php?product_id=<?=$prod_id?>" class="tile">
                     <table class="">
                         <tr>
                             <td>
@@ -147,13 +147,6 @@
     </script>
 </body>
 </html> 
-
-
-
-
-
-
-
 
 
 
