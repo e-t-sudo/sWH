@@ -6,6 +6,7 @@
     
 </head>
 <body>
+<?php include "logincheck.php"; ?>
         <?php $page = "home"; include "includes/header.php"; ?>
 
 
