@@ -21,6 +21,7 @@
     <?php include "./includes/head.php"; ?>
 </head>
 <body>
+        <?php include "./logincheck.php"?>
         <?php include "./includes/header.php"; ?>
         <br><br>
         <div class="container-fluid prod_details">
@@ -74,9 +75,9 @@
                         <p><?= $description ?></p>
                         <p>Rating:<?php for($i=0; $i<$rating; $i++) echo '<i class="fa fa-star"></i>'; ?>(10 reviews)</p>
                         <p>Lifetime-Access Price : $<?= $price?> </p>
-                        <form action="addtocart.php" method="post">
+                        <form action="cart.php" method="post">
                             <div class="form-group">
-                                    <select name="format" class="form-control">
+                                    <select name="activation_period" class="form-control">
                                         <option value=1>Lifetime Access</option>
                                         <option value=2>Annual Subscription</option>
                                         <option value=3>Monthly Subscription</option>
@@ -117,3 +118,5 @@
         header("Location: products.php");
     }
 ?>
+
+
