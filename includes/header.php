@@ -58,7 +58,7 @@
                                 while($row = mysqli_fetch_assoc($query_result)){
                                     $category = $row['category'];
                                     $cat_id = $row['cat_id']; ?>
-                                    <li class="nav-item dropdown">
+                                    <li class="nav-item dropdown" id="user-menu">
                                     <a class="nav-link dropdown-toggle" href="products.php?category=<?= $cat_id?>" data-toggle="dropdown"><?= $category?><span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu">
                                     <?php
@@ -90,6 +90,22 @@
                         <li class="nav-item">
                             <a class="nav-link <?php if($page=="contact") echo "current-page"; ?>" href="contact.php">Contacts</a>
                         </li>
+            <?php if(isset($_SESSION['customer_id'])){
+                $result = mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "select * from customers where `customer_id` = ".$_SESSION['customer_id']);
+                $row = mysqli_fetch_assoc($result);
+                $customer_name = $row['full_name']; ?>
+                          <div id="logoutandchangepwd">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown"><?= $customer_name?><span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                                    <li><a class="dropdown-item" href="./logout.php">Logout</a></li>
+                                                    <li><a class="dropdown-item" href="password.php">Change Password</a></li>
+                                    </ul>
+                                </li>
+                         </div>
+            <?php }else{ ?>
+                <a class="nav-link" href="login.php">Login</a>
+           <?php } ?>
                     </ul>
                 </div>
             </div>

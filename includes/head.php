@@ -8,7 +8,7 @@
     <script src="./frameworks/jquery.min.js"></script>
     <script src="frameworks/popper.min.js"></script>
     <script src="frameworks/bootstrap.js"></script>
-    <script src="https://use.fontawesome.com/d8fd830dde.js"></script>  
+    <script src="./includes/fa.js"></script>  
     <link rel="stylesheet" href="includes/main.css">
     <style>
         .card-img-top{
