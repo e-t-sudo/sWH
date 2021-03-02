@@ -14,9 +14,10 @@
 		<div class="modal checkout-modal" id="checkout-modal" tabindex="-1" role="dialog" aria-labelledby="checkout-modal" aria-hidden="true">
 			<div class="modal-dialog modal-lg">
 			<div class="modal-content">
+			<!--The two headers start -->
 			<div class="modal-header-1" style = "display:block">
 				<div class="text-center">
-				<h5 class="modal-title">Delivery Address</h5>
+				<h5 class="modal-title">Personal Information</h5>
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
@@ -26,66 +27,73 @@
 				</div>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
+			<!--The two headers end -->
 			<div class='modal-body'>
 				<!-- HERE IT COMES -->
 				<form action="checkout.php" method="post">
+				<!--Form step number 1 -->
 				<div id="step1" style="display:block">
-					<h3 class="text-center">Delivery Adress</h3>
+				<?php $user_info_array = mysqli_fetch_assoc(mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "select * from customers where customer_id = ".$_SESSION['customer_id']));
+						$customer_name = $user_info_array['full_name'];
+						$customer_email = $user_info_array['email'];?>
+					
 					<div class="container-fluid">
 					<div class="row">
 					<div class="form-group col-md-6">
-						<input class="form-control" type="text" name="address" placeholder="Full Address">
+						<input readonly class="form-control" type="text" name="full_name" placeholder="Full Name" value="<?= $customer_name ?>">
 					</div>
 					<div class="form-group col-md-6">
-						<input class="form-control" type="number" name="zip" placeholder="Zip Code">
+						<input readonly class="form-control" type="email" name="email" placeholder="Email" value="<?=$customer_email ?>">
 					</div>
 					</div>
 					</div>
 				</div>
+				<!--Form step number 2 -->
 				<div id="step2" style="display:none">
-					<h3 class="text-center">Payment Details</3>
 					<div class="container-fluid">
-					<div class="row">
-					<div class="form-group col-md-6">
-						<input class="form-control" type="number" name="card_number" placeholder="Card Number">
-					</div>
-					<div class="form-group col-md-6">
-						<input class="form-control" type="text" name="card_name" placeholder="Name on the Card">
-					</div>
-					<div class="form-group col-md-6">
-						<select class = "form-control" name = "card_exp_month">
-						<?php
-						for($i = 1; $i <= 12; $i++){
-						print('<option value = "'.$i.'">'.$i.'</option>');
-						}
-						?>
-						</select>
-					</div>
-					<div class="form-group col-md-6">
-						<select class="form-control" name = "card_exp_year">
-						<?php
-						$yr = date('Y');
-						for($i = $yr; $i <= $yr+5; $i++){
-						print('<option value = "'.$i.'">'.$i.'</option>');
-						}
-						?>
-						</select>
-					</div>
-					<div class="form-group col-md-6">
-						<input class="form-control" type="number" name="cvv" placeholder="CVV">
-					</div>
-					</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<input class="form-control" type="number" name="card_number" placeholder="Card Number">
+							</div>
+							<div class="form-group col-md-6">
+								<input class="form-control" type="text" name="card_name" placeholder="Name on the Card">
+							</div>
+							<div class="form-group col-md-6">
+								<select class = "form-control" name = "card_exp_month">
+									<?php
+									for($i = 1; $i <= 12; $i++){
+									print('<option value = "'.$i.'">'.$i.'</option>');
+									}
+								?>
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<select class="form-control" name = "card_exp_year">
+								<?php
+								$yr = date('Y');
+								for($i = $yr; $i <= $yr+5; $i++){
+								print('<option value = "'.$i.'">'.$i.'</option>');
+								}
+								?>
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<input class="form-control" type="number" name="cvv" placeholder="CVV">
+							</div>
+						</div>
 					</div>
 					<div class="form-group text-right">
 						<button type="submit" name="checkout" class="form-control btn btn-success checkout_btn">Checkout >></button>
 					</div>
 				</div>
 				</form>
+
+
 				<div class="text-right">
-			    	<button class="btn btn-primary next-step" style="display:block-inline;">Next >></button>
+			    	<button class="btn btn-primary next-step" style="display:block; position: relative; left: 90%; ">Next >></button>
 				</div>
 				<div class="text-left">
-				    <button class="btn btn-warning back-step" style="display:none">Back</button>
+				    <button class="btn btn-warning back-step" style="display: none; ">Back</button>
 				</div>
 			</div>
 		</div>
@@ -132,7 +140,7 @@ if(isset($_POST['addtocart'])){
 <?php
 $conn = mysqli_connect("localhost", "root", "", "newbase");
 if(! $conn ) {
-	die('Could not connect: ' . mysqli_error());
+	die('Could not connect: ' . mysqli_error($conn));
 }
 $cart_total = 0;
 $customer_id = $_SESSION['customer_id'];
@@ -151,21 +159,24 @@ $prod_total = '';
 	if(mysqli_num_rows($detail_result) > 0){
 	while($prod = mysqli_fetch_array($detail_result)){
 	$prod_name = $prod['prod_title'];
-	$prod_price = ($prod['list_price'] - $prod['list_price']/100);
+	$prod_price = ($prod['list_price'] - $prod['list_price']*$prod['discount']/100);
+	$prod_price = number_format($prod_price, 2, ".");
 	$total_price = $prod_price/$activation_period;
+	$total_price = number_format($total_price, 2, ".");
     $cart_total = $cart_total + $total_price;
 	print('<tr><td></td><td>'.$prod_name.'</td><td>'.$activation_period.'</td><td>'.$prod_price.'</td><td>'.$total_price.'</td></tr>');
 	}
 	}
 }
 }
+$cart_total = number_format($cart_total, 2, ".");
 print('<tr><td colspan = "4">Cart Total</td><td>'.$cart_total.'</td></tr>');
 mysqli_close($conn);
 ?>
 </tbody>
 </table>
 <div class="text-right">
-<button class="btn btn-primary modal-btn" >Check Out</button>
+<button class="btn btn-primary modal-btn" onClick="showModel()" >Check Out</button>
 </div>
 	<?php include 'includes/footer.php'; ?>
 	
