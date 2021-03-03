@@ -111,82 +111,87 @@
 
 
 <?php
-$conn = mysqli_connect('localhost', 'root', '', 'testbase');
 if(isset($_POST['addtocart'])){
-        $cart_id = $_SESSION['customer_id'];
+	echo "Add to CArt";
+   	    $cart_id = $_SESSION['customer_id'];
         $prod_id = $_POST['prod_id'];
         $activation_period = $_POST['activation_period'];
-        $update_query = "insert into carts (cart_id, cart_prod, quantity) values ('$cart_id', '$prod_id', '$quantity')";
-        mysqli_query($conn, $update_query);
+        $update_query = "insert into carts (`cart_id`, `prod_id`, `activation_period`) values ('$cart_id', '$prod_id', '$activation_period')";
+        $conn = mysqli_connect("localhost", "root", "", "newbase");
+		mysqli_query($conn, $update_query); 
         mysqli_close($conn);
 }
 ?>
 
-<div class="container-fluid padding">
-	<div class="padding">
-	<br><br><br><br><br><br>
-	<h2 class="text-center"><?php $conn = mysqli_connect('localhost', 'root', '', 'newbase'); $result = mysqli_query($conn, "select * from customers where customer_id = ".$_SESSION['customer_id']); $row = mysqli_fetch_array($result); echo $row['full_name']; ?></h2>
-	<h1 class="text-center"><i class="fa fa-shopping-cart"></i></h1>
-	<br><br><br><br><br><br>
-	</div>
+	<div class="container-fluid padding">
+		<div class="padding">
+			<br><br><br><br><br><br>
+			<style>
+			.fa-shopping-cart{
+				color: lightcoral;
+			}</style>
+				<h2 class="text-center"><?php $conn = mysqli_connect('localhost', 'root', '', 'newbase'); $result = mysqli_query($conn, "select * from customers where customer_id = ".$_SESSION['customer_id']); $row = mysqli_fetch_array($result); echo $row['full_name']; ?></h2>
+				<h1 class="text-center"><i class="fa fa-shopping-cart"></i></h1>
+			<br><br><br><br><br><br>
+		</div>
 	</div>
 	<hr>
 
 
 
 <table class="table table-bordered table-striped text-center">
-<thead><th></th><th>Product</th><th>Activation Period</th><th>LifeTime Access Price</th><th>Total</th></thead>
-<tbody>
-<?php
-$conn = mysqli_connect("localhost", "root", "", "newbase");
-if(! $conn ) {
-	die('Could not connect: ' . mysqli_error($conn));
-}
-$cart_total = 0;
-$customer_id = $_SESSION['customer_id'];
-$query = "select * from carts where cart_id = ".$customer_id;
-$result = mysqli_query($conn, $query);
-if(mysqli_num_rows($result) > 0){
-while($row = mysqli_fetch_array($result)){
-$prod_id = $row['prod_id'];
-$prod_name = '';
-$prod_price = '';
-$activation_period = $row['activation_period'];
-$prod_total = '';
+	<thead><th></th><th>Product</th><th>Activation Period</th><th>LifeTime Access Price</th><th>Total</th></thead>
+	<tbody>
+		<?php
+			$conn = mysqli_connect("localhost", "root", "", "newbase");
+			if(! $conn ) {
+				die('Could not connect: ' . mysqli_error($conn));
+			}
+			$cart_total = 0;
+			$customer_id = $_SESSION['customer_id'];
+			$query = "select * from carts where cart_id = ".$customer_id;
+			$result = mysqli_query($conn, $query);
+			if(mysqli_num_rows($result) > 0){
+			while($row = mysqli_fetch_array($result)){
+			$prod_id = $row['prod_id'];
+			$prod_name = '';
+			$prod_price = '';
+			$activation_period = $row['activation_period'];
+			$prod_total = '';
 
-	$prod_detail_query = "select * from products where prod_id = ".$prod_id;
-	$detail_result = mysqli_query($conn, $prod_detail_query);
-	if(mysqli_num_rows($detail_result) > 0){
-	while($prod = mysqli_fetch_array($detail_result)){
-	$prod_name = $prod['prod_title'];
-	$prod_price = ($prod['list_price'] - $prod['list_price']*$prod['discount']/100);
-	$prod_price = number_format($prod_price, 2, ".");
-	$total_price = $prod_price/$activation_period;
-	$total_price = number_format($total_price, 2, ".");
-    $cart_total = $cart_total + $total_price;
-	print('<tr><td></td><td>'.$prod_name.'</td><td>'.$activation_period.'</td><td>'.$prod_price.'</td><td>'.$total_price.'</td></tr>');
-	}
-	}
-}
-}
-$cart_total = number_format($cart_total, 2, ".");
-print('<tr><td colspan = "4">Cart Total</td><td>'.$cart_total.'</td></tr>');
-mysqli_close($conn);
-?>
-</tbody>
+				$prod_detail_query = "select * from products where prod_id = ".$prod_id;
+				$detail_result = mysqli_query($conn, $prod_detail_query);
+				if(mysqli_num_rows($detail_result) > 0){
+				while($prod = mysqli_fetch_array($detail_result)){
+				$prod_name = $prod['prod_title'];
+				$prod_price = ($prod['list_price'] - $prod['list_price']*$prod['discount']/100);
+				$prod_price = number_format($prod_price, 2, ".");
+				$total_price = $prod_price/$activation_period;
+				$total_price = number_format($total_price, 2, ".");
+				$cart_total = $cart_total + $total_price;
+				print('<tr><td></td><td>'.$prod_name.'</td><td>'.$activation_period.'</td><td>'.$prod_price.'</td><td>'.$total_price.'</td></tr>');
+				}
+				}
+			}
+			}
+			$cart_total = number_format($cart_total, 2, ".");
+			print('<tr><td colspan = "4">Cart Total</td><td>'.$cart_total.'</td></tr>');
+			mysqli_close($conn);
+		?>
+	</tbody>
 </table>
 <div class="text-right">
-<button class="btn btn-primary modal-btn" onClick="showModel()" >Check Out</button>
+<button class="btn btn-primary modal-btn">Check Out</button>
 </div>
 	<?php include 'includes/footer.php'; ?>
 	
-	<!--MODAL Handler -->
-	
 	<script type='text/javascript'>
 	$(document).ready(function(){	
+//display modal when .modal-btn is clicked 
 		$('.modal-btn').click(function(){
 			$('#checkout-modal').modal('show');
 		});
+//function to fire when .next-step button is clicked
 		$('.next-step').click(function(){
 				$('#step1').css('display', 'none');
 				$('.next-step').css('display', 'none');
@@ -194,10 +199,9 @@ mysqli_close($conn);
 				$('.back-step').css('display', 'block');
 				$('.modal-header-1').css('display', 'none');
 				$('.modal-header-2').css('display', 'block');
-				
-			//	$('.checkout_btn').css('display', 'block-inline');
 		});
-			$('.back-step').click(function(){
+//function to be fired when .back-step button is clicked
+		$('.back-step').click(function(){
 				$('#step1').css('display', 'block');
 				$('.next-step').css('display', 'block');
 				$('#step2').css('display', 'none');
@@ -208,7 +212,10 @@ mysqli_close($conn);
 		});
 	});
 	</script>
-	
-	<!-------->
+	<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
 </body>
 </html>
