@@ -7,6 +7,35 @@
 </head>
 <body>
 <?php include "./logincheck.php"; ?>
+<?php
+if(isset($_POST['addtocart'])){
+	if(isset($_SESSION['customer_id'])){
+   	    $cart_id = $_SESSION['customer_id'];
+        $prod_id = $_POST['prod_id'];
+		//delete the previous row with this prod_id 
+		mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "delete from carts where `cart_id` = ".$cart_id." and `prod_id` = ".$prod_id); 
+        $activation_period = $_POST['activation_period'];
+        $update_query = "insert into carts (`cart_id`, `prod_id`, `activation_period`) values ('$cart_id', '$prod_id', '$activation_period')";
+        $conn = mysqli_connect("localhost", "root", "", "newbase");
+		mysqli_query($conn, $update_query); 
+        mysqli_close($conn);
+	}else{
+		header("Location: login.php");
+	}
+}
+if(isset($_GET['delete'])){
+	if($_GET['delete']==="cart_item"){
+		if(isset($_GET['id'])){
+			$prod_id = $_GET['id']; 
+			$conn = mysqli_connect("localhost", "root", "", "newbase");
+			$remove_query = "delete from carts where `prod_id` = ".$prod_id; 
+			mysqli_query($conn, $remove_query); 
+			header("Location: cart.php"); 
+		}
+	}
+}
+?>
+
 <?php include 'includes/header.php'; ?>
 
 <!--MODAL -->
@@ -106,23 +135,6 @@
 
 
 
-
-
-
-
-<?php
-if(isset($_POST['addtocart'])){
-	echo "Add to CArt";
-   	    $cart_id = $_SESSION['customer_id'];
-        $prod_id = $_POST['prod_id'];
-        $activation_period = $_POST['activation_period'];
-        $update_query = "insert into carts (`cart_id`, `prod_id`, `activation_period`) values ('$cart_id', '$prod_id', '$activation_period')";
-        $conn = mysqli_connect("localhost", "root", "", "newbase");
-		mysqli_query($conn, $update_query); 
-        mysqli_close($conn);
-}
-?>
-
 	<div class="container-fluid padding">
 		<div class="padding">
 			<br><br><br><br><br><br>
@@ -169,7 +181,7 @@ if(isset($_POST['addtocart'])){
 				$total_price = $prod_price/$activation_period;
 				$total_price = number_format($total_price, 2, ".");
 				$cart_total = $cart_total + $total_price;
-				print('<tr><td></td><td>'.$prod_name.'</td><td>'.$activation_period.'</td><td>'.$prod_price.'</td><td>'.$total_price.'</td></tr>');
+				print('<tr><td><a href="cart.php?delete=cart_item&id='.$prod_id.'"><i class="fa fa-remove" style="color: red; "></i></a></td><td>'.$prod_name.'</td><td>'.$activation_period.'</td><td>'.$prod_price.'</td><td>'.$total_price.'</td></tr>');
 				}
 				}
 			}

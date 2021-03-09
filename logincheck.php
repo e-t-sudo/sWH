@@ -38,5 +38,5 @@ if(!isset($_SESSION['customer_id'])){ ?>
 	</form>
 	</div>
 <?php exit; } 
-
-}?>
+}
+?>

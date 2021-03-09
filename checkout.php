@@ -20,11 +20,9 @@ if(isset($_POST['checkout'])){
 				$price = $price/$activation_period;
 				$cart_total = $cart_total + $price;
 		}
-	$_SESSION['cart_total'] = $cart_total;
-	//cart_total calculated
-	$cart_total =  number_format($cart_total, 2, '.'); 
-	unset($_SESSION['cart_total']); 
-
+		//cart total calculated
+		$_SESSION['cart_id'] = $_SESSION['customer_id'];
+		$cart_total = number_format($cart_total, 2, ".");
 include "./instamojo/Instamojo.php"; 
 $ch = curl_init();
 
@@ -36,14 +34,14 @@ curl_setopt($ch, CURLOPT_HTTPHEADER,
             array("X-Api-Key:test_cb2fff04e9049fca0690aa1dfe3",
                   "X-Auth-Token:test_9c4046bcbdcd928f58ed0e79ad0"));
 $payload = Array(
-    'purpose' => 'Buy Software',
+    'purpose' => 'Software from sWH',
     'amount' => $cart_total,
-    'phone' => '9682344507',
-    'buyer_name' => 'Irshad Tantry',
+   // 'phone' => '9682344507',
+    'buyer_name' => $customer_name,
     'redirect_url' => 'http://localhost:1234/sWH/redirect.php',
     'send_email' => true,
   //  'webhook' => 'http://www.example.com/webhook/',
-    'send_sms' => true,
+  //  'send_sms' => true,
     'email' => $customer_email,
     'allow_repeated_payments' => false
 );
@@ -52,8 +50,12 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payload));
 $response = curl_exec($ch);
 curl_close($ch); 
 $response = json_decode($response); 
-$payment_link = $response->payment_request->longurl;
-$_SESSION['tid'] = $response->payment_request->id; 
+if (!empty($response->payment_request->longurl)) {
+	$payment_link = $response->payment_request->longurl;
+}
+if(!empty($response->payment_request->id)){
+	$_SESSION['tid'] = $response->payment_request->id; 
+}
 header("Location: ".$payment_link); 
 die(); 
 
