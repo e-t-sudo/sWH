@@ -6,7 +6,6 @@
 	<p><i class="fa fa-compass" aria-hidden="true" style="font-size:3em"></i></p>
 	<hr class="light">
 	<?php 
-		include "includes/init.php";
 		$display = 1;
 		$sql_query = "select * from addresses where `display` = $display";
 		$query_result = mysqli_query($conn, $sql_query);
@@ -32,7 +31,6 @@
 	<p><i class="fa fa-clock-o" aria-hidden="true" style="font-size:3em"></i></p>
 	<hr class="light">
 	<?php 
-		include "includes/init.php";
 		$display = 1;
 		$sql_query = "select * from timings where `display` = $display";
 		$query_result = mysqli_query($conn, $sql_query);
@@ -50,7 +48,6 @@
 	<p><i class="fa fa-list" aria-hidden="true" style="font-size:3em"></i></p>
 	<hr class="light">
 	<?php
-		include "includes/init.php";
 		$sql_query = "select * from categories where `parent` = 1";
 		$query_result = mysqli_query($conn, $sql_query);
 		if(mysqli_num_rows($query_result)>0){

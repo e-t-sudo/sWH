@@ -1,7 +1,7 @@
+<?php include "./includes/_conn.php"; ?>
 <?php 
     if(isset($_GET['product_id'])){
             $prod_id = $_GET['product_id'];
-            $conn = mysqli_connect("localhost", "root", "", "newbase");
             $prod_query = "select * from products where `prod_id` = $prod_id";
             $result = mysqli_query($conn, $prod_query);
             if(mysqli_num_rows($result)>0){

@@ -1,7 +1,7 @@
+<?php include "./includes/_conn.php"; ?>
 <?php
 if(isset($_POST['cat_id'])){//for editing categories
     $cat_id = $_POST['cat_id'];
-    $conn = mysqli_connect("localhost", "root", "", "newbase");
     $sql_query = "select * from categories where `cat_id` = $cat_id";
     $query_result = mysqli_query($conn, $sql_query);
     if(mysqli_num_rows($query_result)>0){
@@ -71,7 +71,6 @@ if(isset($_POST['cat_id'])){//for editing categories
 
 if(isset($_POST['add_id'])){//for editing office addresses
     $add_id = $_POST['add_id'];
-    $conn = mysqli_connect("localhost", "root", "", "newbase");
     $add_query = "select * from addresses where `address_id` = $add_id";
     $add_result = mysqli_query($conn, $add_query);
     $add_array = mysqli_fetch_assoc($add_result);
@@ -117,7 +116,6 @@ echo $response;
 }
 if(isset($_POST['timing_id'])){//for editing timing and schedules
     $timing_id = $_POST['timing_id'];
-    $conn = mysqli_connect("localhost", "root", "", "newbase");
     $time_query = "select * from timings where `timing_id` = $timing_id";
     $time_result = mysqli_query($conn, $time_query);
     $time_array = mysqli_fetch_assoc($time_result);

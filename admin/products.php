@@ -1,3 +1,4 @@
+<?php include "./includes/_conn.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,6 @@
 	</thead>
 	<tbody>
 		<?php
-		$conn = mysqli_connect("localhost", "root", "", "newbase");
 		$prod_query = "select * from products";
 		$result = mysqli_query($conn, $prod_query);
 		if(mysqli_num_rows($result) > 0){

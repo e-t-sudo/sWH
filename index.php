@@ -1,12 +1,13 @@
+<?php include "./includes/_conn.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include "includes/head.php"; ?>
+    <?php include "logincheck.php"; ?>
     <title>sWH</title>
-    
 </head>
 <body>
-<?php include "logincheck.php"; ?>
+    
         <?php $page = "home"; include "includes/header.php"; ?>
 
 
@@ -17,7 +18,7 @@
           <li class="indicator" data-target="#carouselSlider" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-                   <?php    $conn = mysqli_connect("localhost", "root", "", "newbase");
+                   <?php
                  $prod_query = "select * from products where `featured` = 1";
                  $total_prods = sizeof(mysqli_fetch_assoc(mysqli_query($conn, $prod_query)));
                  echo $total_prods;
@@ -78,7 +79,6 @@
         <div>
             <form class="form padding" method = "post" action="index.php">
                 <?php 
-                    $conn = mysqli_connect("localhost", "root", "", "newbase");
                     $tag_query = "select * from tags";
                     $result = mysqli_query($conn, $tag_query);
                     if(mysqli_num_rows($result)>0){
@@ -97,11 +97,11 @@
             </form>
         </div>
         
-<br><br><hr><h1 style="text-align: center;">Featured Products</h1><hr>
+<br><br><hr><h1 style="text-align: center;">Featured Products</h1>
+                <hr>
         <div class="container-fluid text-center">
             <div class="row">
         <?php 
-            $conn = mysqli_connect("localhost", "root", "", "newbase");
             $prod_query = "select * from products where `featured` = 1";
             $prod_result = mysqli_query($conn, $prod_query);
             if(mysqli_num_rows($prod_result)){
@@ -114,7 +114,7 @@
                     $prod_category = $row['prod_category'];
                     $description = $row['description'];
                     $rating = $row['rating']; ?>
-            <div class="col-md-4 col-sm-6 col-xs-6 col-lg-4 prod-tile">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 prod-tile">
                 <a href="details.php?product_id=<?=$prod_id?>" class="tile">
                     <table class="">
                         <tr>
@@ -146,10 +146,10 @@
         <br><br><br><br><br>
         <?php include "includes/footer.php" ?>
         <script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
-    }
-    </script>
+            if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
 </body>
 </html> 
 

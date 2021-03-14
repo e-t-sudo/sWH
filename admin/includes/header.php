@@ -1,5 +1,6 @@
+
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-  <a class="navbar-brand" href="#">Admin Panel</a>
+  <a class="navbar-brand" href="./index.php">Admin Panel</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,7 +17,6 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <table class="table text-center">
                 <?php
-                  $conn = mysqli_connect("localhost", "root", "", "newbase");
                   $tag_query = "select * from tags";
                   $result = mysqli_query($conn, $tag_query);
                   if(mysqli_num_rows($result)>0){
@@ -36,10 +36,12 @@
           </div>
         </div>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="purchases.php">Purchases</a>
+      </li>
       <?php 
         if(isset($_SESSION['admin_id'])){
           $admin_id = $_SESSION['admin_id'];
-          $conn = mysqli_connect("localhost", "root", "", "newbase");
           $privilege_query = "select * from admins where `admin_id` = ".$admin_id;
           $privilege = mysqli_fetch_assoc(mysqli_query($conn, $privilege_query))['access'];
           if($privilege==3){ ?>

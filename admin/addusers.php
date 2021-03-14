@@ -1,3 +1,4 @@
+<?php include "./includes/_conn.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,6 @@
             $email = $_POST['email'];
             $pwd = $_POST['pwd'];
             $access = $_POST['access'];
-            $conn = mysqli_connect("localhost", "root", "", "newbase");
             $add_query = "insert into admins (`full_name`, `email`, `pwd`, `access`) values ('$full_name', '$email', '$pwd', $access)";
             $result = mysqli_query($conn, $add_query);
             if($result===true) echo "Done";
@@ -39,7 +39,6 @@
     <br><br><br><br><br><br>
     <?php 
           $admin_id = $_SESSION['admin_id'];
-          $conn = mysqli_connect("localhost", "root", "", "newbase");
           $privilege_query = "select * from admins where `admin_id` = ".$admin_id;
           $current_user_privilege = mysqli_fetch_assoc(mysqli_query($conn, $privilege_query))['access'];
           if($privilege>=3){ ?>

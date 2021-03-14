@@ -1,8 +1,9 @@
 
+<?php include "./includes/_conn.php"; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>My E-Commerce Project</title>
+  <title>Cart</title>
  <?php include 'includes/head.php'; ?>
 </head>
 <body>
@@ -13,12 +14,10 @@ if(isset($_POST['addtocart'])){
    	    $cart_id = $_SESSION['customer_id'];
         $prod_id = $_POST['prod_id'];
 		//delete the previous row with this prod_id 
-		mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "delete from carts where `cart_id` = ".$cart_id." and `prod_id` = ".$prod_id); 
+		mysqli_query($conn, "delete from carts where `cart_id` = ".$cart_id." and `prod_id` = ".$prod_id); 
         $activation_period = $_POST['activation_period'];
         $update_query = "insert into carts (`cart_id`, `prod_id`, `activation_period`) values ('$cart_id', '$prod_id', '$activation_period')";
-        $conn = mysqli_connect("localhost", "root", "", "newbase");
 		mysqli_query($conn, $update_query); 
-        mysqli_close($conn);
 	}else{
 		header("Location: login.php");
 	}
@@ -27,7 +26,6 @@ if(isset($_GET['delete'])){
 	if($_GET['delete']==="cart_item"){
 		if(isset($_GET['id'])){
 			$prod_id = $_GET['id']; 
-			$conn = mysqli_connect("localhost", "root", "", "newbase");
 			$remove_query = "delete from carts where `prod_id` = ".$prod_id; 
 			mysqli_query($conn, $remove_query); 
 			header("Location: cart.php"); 
@@ -62,7 +60,7 @@ if(isset($_GET['delete'])){
 				<form action="checkout.php" method="post">
 				<!--Form step number 1 -->
 				<div id="step1" style="display:block">
-				<?php $user_info_array = mysqli_fetch_assoc(mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "select * from customers where customer_id = ".$_SESSION['customer_id']));
+				<?php $user_info_array = mysqli_fetch_assoc(mysqli_query($conn, "select * from customers where customer_id = ".$_SESSION['customer_id']));
 						$customer_name = $user_info_array['full_name'];
 						$customer_email = $user_info_array['email'];?>
 					
@@ -142,7 +140,7 @@ if(isset($_GET['delete'])){
 			.fa-shopping-cart{
 				color: lightcoral;
 			}</style>
-				<h2 class="text-center"><?php $conn = mysqli_connect('localhost', 'root', '', 'newbase'); $result = mysqli_query($conn, "select * from customers where customer_id = ".$_SESSION['customer_id']); $row = mysqli_fetch_array($result); echo $row['full_name']; ?></h2>
+				<h2 class="text-center"><?php $result = mysqli_query($conn, "select * from customers where customer_id = ".$_SESSION['customer_id']); $row = mysqli_fetch_array($result); echo $row['full_name']; ?></h2>
 				<h1 class="text-center"><i class="fa fa-shopping-cart"></i></h1>
 			<br><br><br><br><br><br>
 		</div>
@@ -155,15 +153,13 @@ if(isset($_GET['delete'])){
 	<thead><th></th><th>Product</th><th>Activation Period</th><th>LifeTime Access Price</th><th>Total</th></thead>
 	<tbody>
 		<?php
-			$conn = mysqli_connect("localhost", "root", "", "newbase");
-			if(! $conn ) {
-				die('Could not connect: ' . mysqli_error($conn));
-			}
 			$cart_total = 0;
+			$not_empty = false; 
 			$customer_id = $_SESSION['customer_id'];
 			$query = "select * from carts where cart_id = ".$customer_id;
 			$result = mysqli_query($conn, $query);
 			if(mysqli_num_rows($result) > 0){
+			$not_empty = true;  
 			while($row = mysqli_fetch_array($result)){
 			$prod_id = $row['prod_id'];
 			$prod_name = '';
@@ -185,16 +181,19 @@ if(isset($_GET['delete'])){
 				}
 				}
 			}
+			}else{
+				print('<tr><td colspan = "5" class="text-center text-warning">Your cart is empty</td></tr>');
 			}
 			$cart_total = number_format($cart_total, 2, ".");
 			print('<tr><td colspan = "4">Cart Total</td><td>'.$cart_total.'</td></tr>');
-			mysqli_close($conn);
 		?>
 	</tbody>
 </table>
+<?php if($not_empty===true){ ?>
 <div class="text-right">
 <button class="btn btn-primary modal-btn">Check Out</button>
 </div>
+<?php } ?>
 	<?php include 'includes/footer.php'; ?>
 	
 	<script type='text/javascript'>

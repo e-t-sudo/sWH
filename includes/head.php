@@ -56,7 +56,7 @@
         }
         @media only screen and (max-width: 768px) {
              #product-menu {
-        display: none;
+            display: none;
          }
         }
         

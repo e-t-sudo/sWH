@@ -1,4 +1,4 @@
-
+<?php include "./includes/_conn.php"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +67,6 @@
 	<?php include 'includes/header.php';?> 
     <?php
             if(isset($_POST['edit_category']) && !isset($_POST['new_parent'])){
-                $conn = mysqli_connect("localhost", "root", "", "newbase");
                     $new_category = $_POST['new_category'];
                     $cat_id = $_POST['cat_id'];
                     $display = $_POST['new_display'];
@@ -75,7 +74,6 @@
                     mysqli_query($conn, $edit_query);
             }else if(isset($_POST['edit_category']) && isset($_POST['new_parent'])){
                 echo  $_POST['new_parent'];
-                $conn = mysqli_connect("localhost", "root", "", "newbase");
                 $new_category = $_POST['new_category'];
                 $cat_id = $_POST['cat_id'];
                 $display = $_POST['new_display'];
@@ -93,7 +91,6 @@
     <p class="text-center text-success">
 	<?php
     $admin_id = $_SESSION['admin_id'];
-	$conn = mysqli_connect('localhost', 'root', '', 'newbase');
 	$admin_info_query = "select * from admins where admin_id = ".$admin_id;
 	$info_result = mysqli_query($conn, $admin_info_query);
 	$info_arr = mysqli_fetch_assoc($info_result);
@@ -120,7 +117,6 @@
 			</thead>
 			<tbody>
             <?php
-                $conn = mysqli_connect("localhost", "root", "", "newbase");
                 $sql_query = "select * from categories where `parent` = 0";
                 $query_result = mysqli_query($conn, $sql_query);
                 if(mysqli_num_rows($query_result) > 0){
@@ -161,7 +157,6 @@
 			</thead>
 			<tbody>
 					<?php
-                    $conn = mysqli_connect("localhost", "root", "", "newbase");
                     $office_query = "select * from addresses";
                     $office_result = mysqli_query($conn, $office_query);
                     if(mysqli_num_rows($office_result) > 0){
@@ -187,7 +182,6 @@
                     <thead><th></th><th>Day</th><th>Working Hours</th><th>Display</th><th></th></thead>
                     <tbody>
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "newbase");
                         $timing_query = "select * from timings";
                         $timing_result = mysqli_query($conn, $timing_query);
                         if(mysqli_num_rows($timing_result)>0){

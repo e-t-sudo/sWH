@@ -22,7 +22,6 @@
                                                 <div class="container-fluid" style="background-color: #f6f6f6!important; width: 100%; ">
                                                     <div class="row text-center" style="background-color: #f6f6f6!important">
                                                 <?php
-                                                        $conn = mysqli_connect("localhost", "root", "", "newbase");
                                                         $sql_query = "select * from categories where `parent` = 0 and `display` = 1";
                                                         $query_result = mysqli_query($conn, $sql_query);
                                                         if(mysqli_num_rows($query_result)>0){
@@ -91,7 +90,7 @@
                             <a class="nav-link <?php if($page=="contact") echo "current-page"; ?>" href="contact.php">Contacts</a>
                         </li>
             <?php if(isset($_SESSION['customer_id'])){
-                $result = mysqli_query(mysqli_connect("localhost", "root", "", "newbase"), "select * from customers where `customer_id` = ".$_SESSION['customer_id']);
+                $result = mysqli_query($conn, "select * from customers where `customer_id` = ".$_SESSION['customer_id']);
                 $row = mysqli_fetch_assoc($result);
                 $customer_name = $row['full_name']; ?>
                           <div id="logoutandchangepwd">

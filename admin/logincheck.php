@@ -1,10 +1,10 @@
+<?php include "./includes/_conn.php"; ?>
 <?php 
 session_start();
 if(isset($_POST['login'])){
 	$email = $_POST['email'];
 	$pwd = $_POST['pwd'];
 	unset($_POST);
-	$conn = mysqli_connect("localhost", "root", "", "newbase");
 	$admin_query = "select * from admins where email = '$email' and pwd = '$pwd'";
 	$result = mysqli_query($conn, $admin_query);
 	if(mysqli_num_rows($result) > 0){
